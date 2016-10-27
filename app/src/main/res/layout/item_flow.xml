@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:id="@+id/tv"
+          android:layout_width="wrap_content"
+          android:layout_height="160dp"
+          android:layout_gravity="center_vertical"
+          android:layout_marginBottom="10dp"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="10dp"
+          android:layout_marginTop="5dp"
+          android:background="@drawable/item_bg_flow_round"
+          android:gravity="center"
+          android:minHeight="30dp"
+          android:textColor="@drawable/item_text_bg_flow"
+          android:textSize="12sp"
+          tools:text="包子"/>
