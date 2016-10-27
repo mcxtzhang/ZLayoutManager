@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int i = 0;
+
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
         for (int j = 0; j < 60; j++) {
@@ -57,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void add(View vIew) {
         mDatas.add(new TestBean((i++) + "  ", "新增的一个Item"));
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemInserted(mDatas.size() - 1);
     }
 
     public void del(View vIew) {
         mDatas.remove(mDatas.size() - 1);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemRemoved(mDatas.size());
     }
 }
