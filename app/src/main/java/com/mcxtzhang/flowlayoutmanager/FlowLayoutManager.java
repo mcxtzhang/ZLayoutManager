@@ -191,7 +191,7 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
                     break;
                 } else {
                     View child = recycler.getViewForPosition(i);
-                    addView(child, 0);
+                    addView(child, 0);//将View添加至RecyclerView中，childIndex为1，但是View的位置还是由layout的位置决定
                     measureChildWithMargins(child, 0, 0);
 
                     layoutDecoratedWithMargins(child, rect.left, rect.top - mVerticalOffset, rect.right, rect.bottom - mVerticalOffset);
