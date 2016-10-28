@@ -10,6 +10,7 @@ import com.mcxtzhang.flowlayoutmanager.util.CommonAdapter;
 import com.mcxtzhang.flowlayoutmanager.util.ViewHolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,7 +63,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void del(View vIew) {
-        mDatas.remove(mDatas.size() - 1);
-        mAdapter.notifyItemRemoved(mDatas.size());
+/*        mDatas.remove(mDatas.size() - 1);
+        mAdapter.notifyItemRemoved(mDatas.size());*/
+        Collections.shuffle(mDatas);
+        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_rv_1, mDatas) {
+            @Override
+            public void convert(ViewHolder holder, TestBean testBean) {
+                Log.d("zxt", "convert() called with: holder = [" + holder + "], testBean = [" + testBean + "]");
+                holder.setText(R.id.tv, testBean.getName() + testBean.getUrl());
+                holder.setOnClickListener(R.id.tv, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.e("TAG1", "onClick() called with: v = [" + v + "]");
+                    }
+                });
+            }
+        });
     }
 }
