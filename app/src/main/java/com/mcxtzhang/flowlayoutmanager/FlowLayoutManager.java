@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 
 public class FlowLayoutManager extends RecyclerView.LayoutManager {
     private int mVerticalOffset;//竖直偏移量 每次换行时，要根据这个offset判断
-    private int mFirstVisiPos;
-    private int mLastVisiPos;
+    private int mFirstVisiPos;//屏幕可见的第一个View的Position
+    private int mLastVisiPos;//屏幕可见的最后一个View的Position
 
     private SparseArray<Rect> mItemRects;//key 是View的position，保存View的bounds 和 显示标志，
 
@@ -42,14 +42,14 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
 
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-        if (getItemCount() == 0) {
+        if (getItemCount() == 0) {//没有Item，界面空着吧
             detachAndScrapAttachedViews(recycler);
             return;
         }
-        if (getChildCount() == 0 && state.isPreLayout()) {
+        if (getChildCount() == 0 && state.isPreLayout()) {//state.isPreLayout()是支持动画的
             return;
         }
-        //onLayoutChildren方法在RecyclerView 初始化时 会执行两边
+        //onLayoutChildren方法在RecyclerView 初始化时 会执行两遍
         detachAndScrapAttachedViews(recycler);
 
         //初始化区域
@@ -57,7 +57,7 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
         mFirstVisiPos = 0;
         mLastVisiPos = getItemCount();
 
-
+        //初始化时调用 填充childView
         fill(recycler, state);
 
 

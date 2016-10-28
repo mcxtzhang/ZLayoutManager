@@ -17,12 +17,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:onClick="add"
-        android:text="增加"/>
+        android:text="增加"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:onClick="del"
-        android:text="删除"/>
+        android:text="删除"
+        android:visibility="gone"/>
 </RelativeLayout>

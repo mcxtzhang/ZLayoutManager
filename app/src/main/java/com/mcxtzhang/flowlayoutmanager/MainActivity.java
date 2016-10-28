@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.mcxtzhang.flowlayoutmanager.other.ImgAdapter;
 import com.mcxtzhang.flowlayoutmanager.util.CommonAdapter;
 import com.mcxtzhang.flowlayoutmanager.util.ViewHolder;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         initDatas();
         mRv = (RecyclerView) findViewById(R.id.rv);
         mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
-        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_flow, mDatas) {
+/*        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_flow, mDatas) {
             @Override
             public void convert(ViewHolder holder, TestBean testBean) {
                 Log.d("zxt", "convert() called with: holder = [" + holder + "], testBean = [" + testBean + "]");
@@ -37,14 +38,17 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
+
+        //图片的Adapter
+        mRv.setAdapter(new ImgAdapter(this));
     }
 
     private int i = 0;
 
     public List<TestBean> initDatas() {
         mDatas = new ArrayList<>();
-        for (int j = 0; j < 60; j++) {
+        for (int j = 0; j < 10; j++) {
             mDatas.add(new TestBean((i++) + "  ", "张"));
             mDatas.add(new TestBean((i++) + " ", "旭童"));
             mDatas.add(new TestBean((i++) + " ", "多种type"));
