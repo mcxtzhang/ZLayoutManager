@@ -3,6 +3,7 @@ package com.mcxtzhang.flowlayoutmanager.other;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -30,6 +31,7 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ImgViewHolder> {
             R.mipmap.pic10,
             R.mipmap.pic11
     };
+    private static final String TAG = "zxt/adapter";
     private final Context mContext;
 
     public class ImgViewHolder extends RecyclerView.ViewHolder {
@@ -47,6 +49,7 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ImgViewHolder> {
 
     @Override
     public ImgViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i(TAG, "onCreateViewHolder() called with: parent = [" + parent + "], viewType = [" + viewType + "]");
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -54,6 +57,7 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ImgViewHolder> {
                 (int) (Math.random() * 80) + 40,
                 120
         );
+        lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 800);
         lp.leftMargin = 5;
         lp.topMargin = 5;
         lp.bottomMargin = 5;
@@ -64,6 +68,7 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ImgViewHolder> {
 
     @Override
     public void onBindViewHolder(ImgViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "]");
         holder.mImageView.setImageResource(IMAGES[position % IMAGES.length]);
     }
 

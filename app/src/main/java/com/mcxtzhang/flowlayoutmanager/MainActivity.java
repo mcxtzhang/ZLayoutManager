@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initDatas();
         mRv = (RecyclerView) findViewById(R.id.rv);
-        mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
+        //mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
+        mRv.setLayoutManager(new CardLayoutManager());
 /*        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_flow, mDatas) {
             @Override
             public void convert(ViewHolder holder, TestBean testBean) {
