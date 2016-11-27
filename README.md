@@ -8,11 +8,11 @@ http://blog.csdn.net/zxt0601/article/details/52956504
 
 然而我们今天要实现的流式布局，恰巧就是至少每个Item的宽度不一样，所以在计算坐标的时候算的我死去活来。先看一下效果图：
 
-![这里写图片描述](http://img.blog.csdn.net/20161028154123829)
+![这里写图片描述](https://github.com/mcxtzhang/FlowLayoutManager/blob/master/gifs/gif1)
 
 艾玛，换成妹子图后貌似好看了许多，我都不认识它了，好吧，项目里它一般长下面这样：
 
-![这里写图片描述](http://img.blog.csdn.net/20161028151945346)
+![这里写图片描述](https://github.com/mcxtzhang/FlowLayoutManager/blob/master/gifs/gif2)
 
 往常这种效果，我们一般使用自定义ViewGroup实现，我以前也写了一个。[自定义VG实现流式布局](http://blog.csdn.net/zxt0601/article/details/50533658)
 
