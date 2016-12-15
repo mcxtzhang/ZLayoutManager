@@ -27,4 +27,17 @@
         android:onClick="del"
         android:text="删除"
         android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btnFlow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="流式布局"/>
+
+    <Button
+        android:id="@+id/btnCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="拖拽删除卡片布局"/>
 </RelativeLayout>

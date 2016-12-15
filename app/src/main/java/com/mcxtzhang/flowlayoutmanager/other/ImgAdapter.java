@@ -51,8 +51,8 @@ public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ImgViewHolder> {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(
-                (int) (Math.random() * 80) + 40,
-                120
+                400,
+                400
         );
         lp.leftMargin = 5;
         lp.topMargin = 5;

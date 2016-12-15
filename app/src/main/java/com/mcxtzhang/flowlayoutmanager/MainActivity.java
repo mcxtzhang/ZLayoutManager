@@ -1,12 +1,16 @@
 package com.mcxtzhang.flowlayoutmanager;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
 import com.mcxtzhang.flowlayoutmanager.other.ImgAdapter;
+import com.mcxtzhang.flowlayoutmanager.swipecard.OverlayCardLayoutManager;
 import com.mcxtzhang.flowlayoutmanager.util.CommonAdapter;
 import com.mcxtzhang.flowlayoutmanager.util.ViewHolder;
 
@@ -25,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initDatas();
         mRv = (RecyclerView) findViewById(R.id.rv);
-        mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
+
+
+
 /*        mRv.setAdapter(mAdapter = new CommonAdapter<TestBean>(this, R.layout.item_flow, mDatas) {
             @Override
             public void convert(ViewHolder holder, TestBean testBean) {
@@ -42,6 +48,50 @@ public class MainActivity extends AppCompatActivity {
 
         //图片的Adapter
         mRv.setAdapter(new ImgAdapter(this));
+
+
+        ItemTouchHelper.Callback callback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.DOWN |ItemTouchHelper.UP|ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT
+                )  {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                Log.e("swipecard", "onSwiped() called with: viewHolder = [" + viewHolder + "], direction = [" + direction + "]");
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                c.drawColor(Color.GREEN);
+                View childAt = recyclerView.getChildAt(viewHolder.getLayoutPosition() - 1);
+                childAt.setScaleX(1.5f);
+                childAt.setScaleY(1.5f);
+                Log.e("swipecard", "onChildDraw() called with: c = [" + c + "], recyclerView = [" + recyclerView + "], viewHolder = [" + viewHolder + "], dX = [" + dX + "], dY = [" + dY + "], actionState = [" + actionState + "], isCurrentlyActive = [" + isCurrentlyActive + "]");
+            }
+        };
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+
+
+
+        findViewById(R.id.btnFlow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 mRv.setLayoutManager(new FlowLayoutManager());//自己写的流式布局
+                itemTouchHelper.attachToRecyclerView(null);
+            }
+        });
+
+        findViewById(R.id.btnCard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRv.setLayoutManager(new OverlayCardLayoutManager());
+                itemTouchHelper.attachToRecyclerView(mRv);
+            }
+        });
     }
 
     private int i = 0;
