@@ -1,12 +1,58 @@
-# FlowLayoutManager
-利用自定义LayoutManager 实现的流式布局。
+# LayoutManagerDemo
+[![](https://jitpack.io/v/mcxtzhang/LayoutManagerDemo.svg)](https://jitpack.io/#mcxtzhang/LayoutManagerDemo)
 
-## 相关博文
-http://blog.csdn.net/zxt0601/article/details/52956504
+利用自定义LayoutManager 的一些实战实例。
 
-我想说，如果需求是每个Item宽高一样，实现起来复杂度比每个Item宽高不一样的，要小10+倍。
 
-然而我们今天要实现的流式布局，恰巧就是至少每个Item的宽度不一样，所以在计算坐标的时候算的我死去活来。先看一下效果图：
+相关博文：
+
+[流式布局](http://blog.csdn.net/zxt0601/article/details/52956504)
+
+[仿探探、人人影视 卡片层叠 炫动滑动布局](http://blog.csdn.net/zxt0601/article/details/52956504)
+
+If you like, point a star .Thank you very much!
+
+喜欢随手点个star 多谢
+
+##  在哪里找到我：
+
+我的github：
+
+https://github.com/mcxtzhang
+
+我的CSDN博客：
+
+http://blog.csdn.net/zxt0601
+
+我的稀土掘金：
+
+http://gold.xitu.io/user/56de210b816dfa0052e66495
+
+我的简书：
+
+http://www.jianshu.com/users/8e91ff99b072/timeline
+***
+
+
+# 效果一览：
+
+
+[仿探探、人人影视 卡片层叠 炫动滑动布局](http://blog.csdn.net/zxt0601/article/details/52956504)
+
+探探皇帝翻牌子即视感
+
+![探探皇帝翻牌子即视感](https://github.com/mcxtzhang/LayoutManagerDemo/blob/master/gifs/tantan.gif)
+
+人人美剧订阅界面
+
+![人人美剧订阅界面](https://github.com/mcxtzhang/LayoutManagerDemo/blob/master/gifs/renren.gif)
+
+可配置参数(同时显示6页)：
+
+![人人美剧订阅界面](https://github.com/mcxtzhang/LayoutManagerDemo/blob/master/gifs/tantan_6page.gif)
+
+
+[流式布局](http://blog.csdn.net/zxt0601/article/details/52956504)
 
 ![这里写图片描述](https://github.com/mcxtzhang/FlowLayoutManager/blob/master/gifs/gif1)
 
@@ -16,9 +62,43 @@ http://blog.csdn.net/zxt0601/article/details/52956504
 
 往常这种效果，我们一般使用自定义ViewGroup实现，我以前也写了一个。[自定义VG实现流式布局](http://blog.csdn.net/zxt0601/article/details/50533658)
 
-这不最近再研究自定义LayoutManager么，想来想去也没有好的创意，就先拿它开第一刀吧。
-（后话：流式布局Item宽度不一，不知不觉给自己挖了个大坑，造成拓展一些功能难度倍增，
-观之网上的DEMO，99%Item的大小都是一样的
-，so，这个系列的下一篇我计划 实现一个Item大小一样 的酷炫LayoutManager。
-但是最终做成啥样的效果还没想好，有朋友看到酷炫的效果可以告诉我，我去高仿一个。）
 
+# 使用：
+
+**Step 1. 在项目根build.gradle文件中增加JitPack仓库依赖。**
+```
+    allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+Step 2. Add the dependency
+```
+    dependencies {
+	        compile 'com.github.mcxtzhang:LayoutManagerDemo:V1.0.0'
+	}
+```
+
+Step 3.
+[仿探探、人人影视 卡片层叠 炫动滑动布局](http://blog.csdn.net/zxt0601/article/details/52956504):
+
+以后老板让你做这种效果，你只需要：
+```
+        CardConfig.initConfig(this);
+        ItemTouchHelper.Callback callback = new RenRenCallback(mRv, mAdapter, mDatas);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(mRv);
+```
+
+如果需要定制特殊的参数，例如显示6层：
+
+```
+		 CardConfig.MAX_SHOW_COUNT = 6;
+```
+
+[流式布局](http://blog.csdn.net/zxt0601/article/details/52956504):
+```
+        mRv.setLayoutManager(new FlowLayoutManager());
+```
