@@ -19,7 +19,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.github.mcxtzhang:all-base-adapter:V1.3.0'
+    compile 'com.android.support:cardview-v7:25.1.0'
+    compile 'com.squareup.picasso:picasso:2.3.2'
 }

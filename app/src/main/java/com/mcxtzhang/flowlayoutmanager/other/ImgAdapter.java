@@ -18,17 +18,16 @@ import com.mcxtzhang.flowlayoutmanager.R;
 public class ImgAdapter extends RecyclerView.Adapter<ImgAdapter.ImgViewHolder> {
     @DrawableRes
     public static final int[] IMAGES = new int[]{
-            R.mipmap.pic1,
-            R.mipmap.pic2,
-            R.mipmap.pic3,
-            R.mipmap.pic4,
-            R.mipmap.pic5,
-            R.mipmap.pic6,
-            R.mipmap.pic7,
-            R.mipmap.pic8,
-            R.mipmap.pic9,
-            R.mipmap.pic10,
-            R.mipmap.pic11
+            R.drawable.pic1,
+            R.drawable.pic2,
+            R.drawable.pic3,
+            R.drawable.pic4,
+            R.drawable.pic5,
+            R.drawable.pic6,
+            R.drawable.pic7,
+            R.drawable.pic8,
+            R.drawable.pic9,
+            R.drawable.pic10,
     };
     private final Context mContext;
 

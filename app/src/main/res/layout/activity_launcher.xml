@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -13,6 +13,20 @@
     tools:context="com.mcxtzhang.flowlayoutmanager.LauncherActivity">
 
     <Button
+        android:id="@+id/btnFlow"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="流式布局"/>
+
+    <Button
+        android:id="@+id/btnSwipeCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="人人影视订阅界面"/>
+
+    <Button
+        android:id="@+id/btnKing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="探探界面（皇上翻牌子）"/>
 </LinearLayout>
