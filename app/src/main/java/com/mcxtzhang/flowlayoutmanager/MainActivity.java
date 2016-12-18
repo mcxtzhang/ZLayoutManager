@@ -11,6 +11,7 @@ import android.view.View;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.flowlayoutmanager.other.ImgAdapter;
+import com.mcxtzhang.layoutmanager.flow.FlowLayoutManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
