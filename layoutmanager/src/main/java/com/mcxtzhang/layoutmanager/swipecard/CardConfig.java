@@ -1,4 +1,4 @@
-package com.mcxtzhang.flowlayoutmanager.swipecard;
+package com.mcxtzhang.layoutmanager.swipecard;
 
 import android.content.Context;
 import android.util.TypedValue;

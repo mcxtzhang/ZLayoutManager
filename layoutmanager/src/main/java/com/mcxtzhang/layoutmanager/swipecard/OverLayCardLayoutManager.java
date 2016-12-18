@@ -1,13 +1,9 @@
-package com.mcxtzhang.flowlayoutmanager.swipecard;
+package com.mcxtzhang.layoutmanager.swipecard;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-
-import static com.mcxtzhang.flowlayoutmanager.swipecard.CardConfig.MAX_SHOW_COUNT;
-import static com.mcxtzhang.flowlayoutmanager.swipecard.CardConfig.SCALE_GAP;
-import static com.mcxtzhang.flowlayoutmanager.swipecard.CardConfig.TRANS_Y_GAP;
 
 /**
  * 介绍：参考人人影视 最多排列四个
@@ -31,9 +27,9 @@ public class OverLayCardLayoutManager extends RecyclerView.LayoutManager {
         Log.e(TAG, "onLayoutChildren() called with: recycler = [" + recycler + "], state = [" + state + "]");
         detachAndScrapAttachedViews(recycler);
         int itemCount = getItemCount();
-        if (itemCount >= MAX_SHOW_COUNT) {
+        if (itemCount >= CardConfig.MAX_SHOW_COUNT) {
             //从可见的最底层View开始layout，依次层叠上去
-            for (int position = itemCount - MAX_SHOW_COUNT; position < itemCount; position++) {
+            for (int position = itemCount - CardConfig.MAX_SHOW_COUNT; position < itemCount; position++) {
                 View view = recycler.getViewForPosition(position);
                 addView(view);
                 measureChildWithMargins(view, 0, 0);
@@ -58,14 +54,14 @@ public class OverLayCardLayoutManager extends RecyclerView.LayoutManager {
                 //除了顶层不需要缩小和位移
                 if (level > 0 /*&& level < mShowCount - 1*/) {
                     //每一层都需要X方向的缩小
-                    view.setScaleX(1 - SCALE_GAP * level);
+                    view.setScaleX(1 - CardConfig.SCALE_GAP * level);
                     //前N层，依次向下位移和Y方向的缩小
-                    if (level < MAX_SHOW_COUNT - 1) {
-                        view.setTranslationY(TRANS_Y_GAP * level);
-                        view.setScaleY(1 - SCALE_GAP * level);
+                    if (level < CardConfig.MAX_SHOW_COUNT - 1) {
+                        view.setTranslationY(CardConfig.TRANS_Y_GAP * level);
+                        view.setScaleY(1 - CardConfig.SCALE_GAP * level);
                     } else {//第N层在 向下位移和Y方向的缩小的成都与 N-1层保持一致
-                        view.setTranslationY(TRANS_Y_GAP * (level - 1));
-                        view.setScaleY(1 - SCALE_GAP * (level - 1));
+                        view.setTranslationY(CardConfig.TRANS_Y_GAP * (level - 1));
+                        view.setScaleY(1 - CardConfig.SCALE_GAP * (level - 1));
                     }
                 }
             }
