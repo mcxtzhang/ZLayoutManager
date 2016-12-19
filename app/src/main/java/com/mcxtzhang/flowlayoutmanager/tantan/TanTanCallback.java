@@ -2,7 +2,6 @@ package com.mcxtzhang.flowlayoutmanager.tantan;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
@@ -28,7 +27,8 @@ public class TanTanCallback extends RenRenCallback {
     private static final int MAX_ROTATION = 15;
 
     public TanTanCallback(RecyclerView rv, RecyclerView.Adapter adapter, List datas) {
-        this(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, rv, adapter, datas);
+        //this(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, rv, adapter, datas);
+        super(rv, adapter, datas);
     }
 
     public TanTanCallback(int dragDirs, int swipeDirs, RecyclerView rv, RecyclerView.Adapter adapter, List datas) {
@@ -38,6 +38,10 @@ public class TanTanCallback extends RenRenCallback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         super.onSwiped(viewHolder, direction);
+        //如果不需要循环删除
+/*        Object remove = mDatas.remove(viewHolder.getLayoutPosition());
+        mAdapter.notifyDataSetChanged();*/
+
         //探探只是第一层加了rotate & alpha的操作
         //对rotate进行复位
         viewHolder.itemView.setRotation(0);
