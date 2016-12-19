@@ -86,6 +86,7 @@ Step 3.
 
 以后老板让你做这种效果，你只需要：
 ```
+	mRv.setLayoutManager(new OverLayCardLayoutManager());
         CardConfig.initConfig(this);
         ItemTouchHelper.Callback callback = new RenRenCallback(mRv, mAdapter, mDatas);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
