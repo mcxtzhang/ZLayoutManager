@@ -77,7 +77,7 @@ http://www.jianshu.com/users/8e91ff99b072/timeline
 Step 2. Add the dependency
 ```
     dependencies {
-	        compile 'com.github.mcxtzhang:LayoutManagerDemo:V1.0.0'
+	        compile 'com.github.mcxtzhang:ZLayoutManager:V1.1.0'
 	}
 ```
 
