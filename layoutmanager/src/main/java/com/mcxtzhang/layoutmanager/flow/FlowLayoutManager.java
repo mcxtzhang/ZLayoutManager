@@ -15,6 +15,8 @@ import android.view.ViewGroup;
  */
 
 public class FlowLayoutManager extends RecyclerView.LayoutManager {
+    private static final String TAG=FlowLayoutManager.class.getSimpleName();
+
     private int mVerticalOffset;//竖直偏移量 每次换行时，要根据这个offset判断
     private int mFirstVisiPos;//屏幕可见的第一个View的Position
     private int mLastVisiPos;//屏幕可见的最后一个View的Position
@@ -224,7 +226,11 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
         } else if (realOffset > 0) {//下边界
             //利用最后一个子View比较修正
             View lastChild = getChildAt(getChildCount() - 1);
-            if (getPosition(lastChild) == getItemCount() - 1) {
+            //修复当Item能全部显示在屏幕时，上下滑动会造成错位的问题
+            //如果当前显示Item的数量等于总体Item数量 并且最后一个ItemView高度小于Rv显示高度 则不能滚动
+            if(getItemCount()==getChildCount() && (getHeight()-getPaddingBottom())>=getDecoratedBottom(lastChild)){
+                realOffset=0;
+            } else if (getPosition(lastChild) == getItemCount() - 1) {
                 int gap = getHeight() - getPaddingBottom() - getDecoratedBottom(lastChild);
                 if (gap > 0) {
                     realOffset = -gap;
@@ -234,6 +240,10 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
                     realOffset = Math.min(realOffset, -gap);
                 }
             }
+        }
+        //如果对realOffset检测后 为0 则直接返回
+        if(0==realOffset){
+            return realOffset;
         }
 
         realOffset = fill(recycler, state, realOffset);//先填充，再位移。
