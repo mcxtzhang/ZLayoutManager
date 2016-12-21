@@ -103,3 +103,8 @@ Step 3.
 ```
         mRv.setLayoutManager(new FlowLayoutManager());
 ```
+
+刚建了个QQ搞基交流群：
+557266366 
+里面现在没有人。
+嗯，就这样吧。
