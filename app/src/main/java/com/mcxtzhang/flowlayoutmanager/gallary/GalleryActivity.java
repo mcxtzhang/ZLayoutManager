@@ -6,66 +6,46 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
-import android.view.View;
+import android.widget.ImageView;
 
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.flowlayoutmanager.R;
-import com.mcxtzhang.flowlayoutmanager.TestBean;
-import com.mcxtzhang.flowlayoutmanager.other.ImgAdapter;
+import com.mcxtzhang.flowlayoutmanager.swipecard.SwipeCardBean;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import static com.mcxtzhang.flowlayoutmanager.swipecard.SwipeCardBean.initDatas;
 
 public class GalleryActivity extends AppCompatActivity {
     private RecyclerView mRv;
-    private CommonAdapter<TestBean> mAdapter;
-    private List<TestBean> mDatas;
+    private CommonAdapter<SwipeCardBean> mAdapter;
+    private List<SwipeCardBean> mDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        initDatas();
         mRv = (RecyclerView) findViewById(R.id.rv);
 
-        mAdapter = new CommonAdapter<TestBean>(this, mDatas, R.layout.item_flow) {
-            @Override
-            public void convert(ViewHolder holder, TestBean testBean) {
-                Log.d("zxt", "convert() called with: holder = [" + holder + "], testBean = [" + testBean + "]");
-                holder.setText(R.id.tv, testBean.getName() + testBean.getUrl());
-                holder.setOnClickListener(R.id.tv, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Log.e("TAG1", "onClick() called with: v = [" + v + "]");
-                    }
-                });
-            }
-        };
+        mRv.setAdapter(mAdapter = new CommonAdapter<SwipeCardBean>(this, mDatas = initDatas(), R.layout.item_gallery) {
+            public static final String TAG = "zxt/Adapter";
 
-        //图片的Adapter
-        final ImgAdapter imgAdapter = new ImgAdapter(this);
-        mRv.setAdapter(mAdapter);
+            @Override
+            public void convert(ViewHolder viewHolder, SwipeCardBean swipeCardBean) {
+                Log.d(TAG, "convert() called with: viewHolder = [" + viewHolder + "], swipeCardBean = [" + swipeCardBean + "]");
+                viewHolder.setText(R.id.tvName, swipeCardBean.getName());
+                viewHolder.setText(R.id.tvPrecent, swipeCardBean.getPostition() + " /" + mDatas.size());
+                Picasso.with(GalleryActivity.this).load(swipeCardBean.getUrl()).into((ImageView) viewHolder.getView(R.id.iv));
+            }
+        });
+
         mRv.setLayoutManager(new GalleryLayoutManager());
         SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(mRv);
+        //snapHelper.attachToRecyclerView(mRv);
     }
 
-    private int i = 0;
 
-    public List<TestBean> initDatas() {
-        mDatas = new ArrayList<>();
-        for (int j = 0; j < 1; j++) {
-            mDatas.add(new TestBean((i++) + "  ", "张旭童"));
-            mDatas.add(new TestBean((i++) + " ", "旭童"));
-            mDatas.add(new TestBean((i++) + " ", "多种type"));
-            mDatas.add(new TestBean((i++) + "    ", "遍"));
-            mDatas.add(new TestBean((i++) + "   ", "多种type"));
-            mDatas.add(new TestBean((i++) + "  ", "多种type"));
-            mDatas.add(new TestBean((i++) + "  ", "多种type"));
-            mDatas.add(new TestBean((i++) + "  ", "多种type"));
-        }
-        return mDatas;
-    }
 }

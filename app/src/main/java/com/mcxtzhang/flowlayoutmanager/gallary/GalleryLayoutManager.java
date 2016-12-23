@@ -83,6 +83,16 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
         //step 1 :回收越界子View
         recycleHideViews(recycler, state, dx);
 
+        //为了能给每个childView做动画，所以这里要暂时全部把他们干掉
+        //detachAndScrapAttachedViews(recycler);
+
+        //为了能给每个childView做动画
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            changeViewUIProperty(dx, child);
+        }
+
+
         //Step2.  layout right views
         int itemCount = getItemCount();
         if (dx >= 0) {
@@ -99,6 +109,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
                 left = getNextViewLeft(child);
             }
 
+
             for (int i = startPos; i < itemCount; i++) {
                 //如果左边界已经大于屏幕可见
                 if (left > getWidth() - getPaddingRight()) {
@@ -107,8 +118,13 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
 
                 child = recycler.getViewForPosition(i);
                 addView(child);
+
                 //measure 还是需要的
                 measureChildWithMargins(child, 0, 0);
+
+                changeViewUIProperty(dx, child);
+
+
 /*
             int width = getDecoratedMeasuredWidth(child);
             int height = getDecoratedMeasuredHeight(child);*/
@@ -133,7 +149,11 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
                 leftChild = recycler.getViewForPosition(pos);
                 //这里是重点重点重点！！！作者每次在这里都踩坑，
                 addView(leftChild, 0);
+
                 measureChildWithMargins(leftChild, 0, 0);
+
+                changeViewUIProperty(dx, leftChild);
+
                 layoutDecoratedWithMargins(leftChild, right - mChildWidth, top
                         , right, top + mChildHeight);
                 right -= mChildWidth;
@@ -144,6 +164,31 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
 
 
         return dx;
+    }
+
+    private float mFraction;
+
+    /**
+     * 根据滑动值改变View的UI状态
+     *
+     * @param dx
+     * @param child
+     */
+    private void changeViewUIProperty(int dx, View child) {
+/*        float fraction = dx * 1.0f / 45;
+        if (fraction > 1) {
+            fraction = 1;
+        }
+        mFraction = Math.max(mFraction, fraction);
+        child.animate().rotationY(mFraction * 15).setDuration(100).start();*/
+        int parentMiddle = getPaddingLeft() + getWidth() / 2;
+        int childMiddle = (int) (child.getX() + child.getWidth() / 2);
+        int distance = parentMiddle - childMiddle;
+        float fraction = distance * 1.0f / getWidth() / 2;
+
+        child.setRotationY(45 * fraction);
+        child.setAlpha(0.5f * (1-fraction)+0.5f);
+
     }
 
     /**
