@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * 介绍：一个酷炫画廊效果，假设所有Item大小一样
@@ -36,19 +37,22 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
             return;
         }
         //onLayoutChildren方法在RecyclerView 初始化时 会执行两遍
-        detachAndScrapAttachedViews(recycler);
+        //detachAndScrapAttachedViews(recycler);
 
-        View firstView = recycler.getViewForPosition(0);
-        addView(firstView);
-        measureChildWithMargins(firstView, 0, 0);
-        mChildWidth = getDecoratedMeasuredWidth(firstView);
-        mChildHeight = getDecoratedMeasuredHeight(firstView);
-        removeAndRecycleView(firstView, recycler);
+        if (mChildHeight==0 || mChildWidth ==0){
+            View firstView = recycler.getViewForPosition(0);
+            addView(firstView);
+            measureChildWithMargins(firstView, 0, 0);
+            mChildWidth = getDecoratedMeasuredWidth(firstView);
+            mChildHeight = getDecoratedMeasuredHeight(firstView);
+            removeAndRecycleView(firstView, recycler);
+        }
+
 
         //mFirstVisiblePosition = 0;
 
         fill(recycler, state);
-
+        Log.d(TAG, "循环f @$@$@@!!!!!!!!!!!!!!!!!() onLayoutChildren: " + mLastRecyclePosition+",childcouht:"+getChildCount() );
 
     }
 
@@ -83,14 +87,13 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
         //step 1 :回收越界子View
         recycleHideViews(recycler, state, dx);
 
-        //为了能给每个childView做动画，所以这里要暂时全部把他们干掉
-        //detachAndScrapAttachedViews(recycler);
+
 
         //为了能给每个childView做动画
-        for (int i = 0; i < getChildCount(); i++) {
+/*        for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             changeViewUIProperty(dx, child);
-        }
+        }*/
 
 
         //Step2.  layout right views
@@ -98,6 +101,11 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
         if (dx >= 0) {
             View child;
             int startPos = 0;
+            if (mLastRecyclePosition != -1) {
+                Log.d(TAG, "循环fill() mLastRecyclePosition: " + mLastRecyclePosition+",childcouht:"+getChildCount() );
+                //界面 1 2 ， 1回收， 应该从 3 = 1 + 1 + 1.
+                startPos = mLastRecyclePosition + getChildCount() + 1;
+            }
             int left = getPaddingLeft();
             int top = getPaddingTop();
 
@@ -111,8 +119,10 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
 
 
             for (int i = startPos; i < itemCount; i++) {
-                //如果左边界已经大于屏幕可见
-                if (left > getWidth() - getPaddingRight()) {
+                Log.d(TAG, "循环add() called with: i = [" + i+",childcouht:"+getChildCount() );
+                //如果左边界已经大于屏幕可见(考虑offset)
+                if (left - dx > getWidth() - getPaddingRight()) {
+                    Log.d(TAG, "循环break() called with: i = [" + i +",childcouht:"+getChildCount() );
                     break;
                 }
 
@@ -136,14 +146,19 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
         } else {
             //Step2.  layout left views
             //这种情况屏幕上一定有子View
-            View leftChild = getChildAt(0);
+/*            View leftChild = getChildAt(0);
             int endPos = getPosition(leftChild) - 1;
+            if (mLastRecyclePosition != -1) {
+                //界面 1 2 ， 2回收， 应该从 0 = 2 - 1 - 1.
+                endPos = mLastRecyclePosition - getChildCount() - 1;
+            }
+
             int right = getLastViewRight(leftChild);
             int top = getPaddingTop();
 
             for (int pos = endPos; pos >= 0; pos--) {
                 //只layout可见的
-                if (right < getPaddingLeft()) {
+                if (right - dx < getPaddingLeft()) {
                     break;
                 }
                 leftChild = recycler.getViewForPosition(pos);
@@ -158,7 +173,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
                         , right, top + mChildHeight);
                 right -= mChildWidth;
 
-            }
+            }*/
 
         }
 
@@ -185,10 +200,29 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
         int childMiddle = (int) (child.getX() + child.getWidth() / 2);
         int distance = parentMiddle - childMiddle;
         float fraction = distance * 1.0f / getWidth() / 2;
+        Toast.makeText(child.getContext(), "fraction:" + fraction, Toast.LENGTH_SHORT).show();
+        // Counteract the default slide transition
+        //child.setTranslationX(child.getWidth() * -fraction);
+        // Scale the page down (between MIN_SCALE and 1)
+        //scale(child, fraction);
 
+
+        //rotation(child, fraction);
+
+
+    }
+
+    private void rotation(View child, float fraction) {
         child.setRotationY(45 * fraction);
-        child.setAlpha(0.5f * (1-fraction)+0.5f);
+        child.setAlpha(0.5f * (1 - fraction) + 0.5f);
+    }
 
+    private void scale(View child, float fraction) {
+        final float MIN_SCALE = 0.75f;
+        float scaleFactor = MIN_SCALE
+                + (1 - MIN_SCALE) * (1 - Math.abs(fraction));
+        child.setScaleX(scaleFactor);
+        child.setScaleY(scaleFactor);
     }
 
     /**
@@ -198,15 +232,21 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
      * @param state
      * @param dx
      */
+    protected int mLastRecyclePosition= -1;
+
     private void recycleHideViews(RecyclerView.Recycler recycler, RecyclerView.State state, int dx) {
         int childCount = getChildCount();
         if (childCount > 0 && dx != 0) {
+            mLastRecyclePosition = -1;
             for (int i = childCount - 1; i >= 0; i--) {
                 View child = getChildAt(i);
                 if (dx > 0) {
                     //load right,recycle left
                     //child的右边不再屏幕内 recycle
                     if (getDecoratedRight(child) - dx < getPaddingLeft()) {
+                        Log.d(TAG, "循环 删除 () called with: getPosition(child) = [" + getPosition(child) + "], mLastRecyclePosition = [" + mLastRecyclePosition + "], dx = [" + dx + "]");
+                        //逆序的 所以取最大的
+                        mLastRecyclePosition = Math.max(mLastRecyclePosition, getPosition(child));
                         removeAndRecycleView(child, recycler);
                     } else {
                         //mFirstVisiblePosition = i;
@@ -216,6 +256,9 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
                     //load left,recycle right
                     //child 的左边 不在屏幕内 recycle
                     if (getDecoratedLeft(child) - dx > getWidth() - getPaddingRight()) {
+                        Log.d(TAG, "循环 删除 () called with: getPosition(child) = [" + getPosition(child) + "], mLastRecyclePosition = [" + mLastRecyclePosition + "], dx = [" + dx + "]");
+                        //本身就是应该逆序，所以直接取
+                        mLastRecyclePosition = getPosition(child);
                         removeAndRecycleView(child, recycler);
                     } else {
                         //mLastVisiblePosition = i;
