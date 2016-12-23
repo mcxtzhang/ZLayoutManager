@@ -29,4 +29,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="探探界面（皇上翻牌子）"/>
+
+    <Button
+        android:id="@+id/btnGallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="酷炫折叠画廊"/>
 </LinearLayout>

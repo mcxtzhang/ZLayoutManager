@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".tantan.TanTanActivity">
         </activity>
+        <activity android:name=".gallary.GalleryActivity">
+        </activity>
     </application>
 
 </manifest>

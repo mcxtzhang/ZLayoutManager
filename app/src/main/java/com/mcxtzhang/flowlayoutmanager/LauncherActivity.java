@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.mcxtzhang.flowlayoutmanager.gallary.GalleryActivity;
 import com.mcxtzhang.flowlayoutmanager.swipecard.SwipeCardActivity;
 import com.mcxtzhang.flowlayoutmanager.tantan.TanTanActivity;
 
@@ -30,6 +31,12 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LauncherActivity.this, TanTanActivity.class));
+            }
+        });
+        findViewById(R.id.btnGallery).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LauncherActivity.this, GalleryActivity.class));
             }
         });
     }
