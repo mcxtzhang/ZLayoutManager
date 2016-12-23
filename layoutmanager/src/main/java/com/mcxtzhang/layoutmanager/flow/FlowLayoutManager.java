@@ -32,6 +32,7 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
     }*/
 
     public FlowLayoutManager() {
+        setAutoMeasureEnabled(true);
         mItemRects = new SparseArray<>();
     }
 
@@ -200,11 +201,11 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
         }
 
 
-        Log.d("TAG", "count= [" + getChildCount() + "]" + ",[recycler.getScrapList().size():" + recycler.getScrapList().size() + ", dy:" + dy + ",  mVerticalOffset" + mVerticalOffset+", ");
+        Log.d("TAG", "count= [" + getChildCount() + "]" + ",[recycler.getScrapList().size():" + recycler.getScrapList().size() + ", dy:" + dy + ",  mVerticalOffset" + mVerticalOffset + ", ");
 
         return dy;
     }
-    
+
     @Override
     public boolean canScrollVertically() {
         return true;
