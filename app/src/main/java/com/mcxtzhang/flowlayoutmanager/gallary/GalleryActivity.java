@@ -2,7 +2,9 @@ package com.mcxtzhang.flowlayoutmanager.gallary;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.View;
 
@@ -46,6 +48,8 @@ public class GalleryActivity extends AppCompatActivity {
         final ImgAdapter imgAdapter = new ImgAdapter(this);
         mRv.setAdapter(mAdapter);
         mRv.setLayoutManager(new GalleryLayoutManager());
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(mRv);
     }
 
     private int i = 0;

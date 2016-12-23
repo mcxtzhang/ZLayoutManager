@@ -81,32 +81,9 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
     public int fill(RecyclerView.Recycler recycler, RecyclerView.State state, int dx) {
         Log.d(TAG, "fill() called with: recycler = [" + recycler + "], state = [" + state + "], dx = [" + dx + "]");
         //step 1 :回收越界子View
-        int childCount = getChildCount();
-        if (childCount > 0 && dx != 0) {
-            for (int i = childCount - 1; i >= 0; i--) {
-                View child = getChildAt(i);
-                if (dx > 0) {
-                    //load right,recycle left
-                    //child的右边不再屏幕内 recycle
-                    if (getDecoratedRight(child) - dx < getPaddingLeft()) {
-                        removeAndRecycleView(child, recycler);
-                    } else {
-                        //mFirstVisiblePosition = i;
-                        continue;
-                    }
-                } else {
-                    //load left,recycle right
-                    //child 的左边 不在屏幕内 recycle
-                    if (getDecoratedLeft(child) - dx > getWidth() - getPaddingRight()) {
-                        removeAndRecycleView(child, recycler);
-                    } else {
-                        //mLastVisiblePosition = i;
-                        continue;
-                    }
-                }
-            }
-        }
+        recycleHideViews(recycler, state, dx);
 
+        //Step2.  layout right views
         int itemCount = getItemCount();
         if (dx >= 0) {
             View child;
@@ -139,7 +116,9 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
                         , left + mChildWidth, top + mChildHeight);
                 left += mChildWidth;
             }
+
         } else {
+            //Step2.  layout left views
             //这种情况屏幕上一定有子View
             View leftChild = getChildAt(0);
             int endPos = getPosition(leftChild) - 1;
@@ -165,6 +144,41 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
 
 
         return dx;
+    }
+
+    /**
+     * 根据dx 回收界面不可见的View
+     *
+     * @param recycler
+     * @param state
+     * @param dx
+     */
+    private void recycleHideViews(RecyclerView.Recycler recycler, RecyclerView.State state, int dx) {
+        int childCount = getChildCount();
+        if (childCount > 0 && dx != 0) {
+            for (int i = childCount - 1; i >= 0; i--) {
+                View child = getChildAt(i);
+                if (dx > 0) {
+                    //load right,recycle left
+                    //child的右边不再屏幕内 recycle
+                    if (getDecoratedRight(child) - dx < getPaddingLeft()) {
+                        removeAndRecycleView(child, recycler);
+                    } else {
+                        //mFirstVisiblePosition = i;
+                        continue;
+                    }
+                } else {
+                    //load left,recycle right
+                    //child 的左边 不在屏幕内 recycle
+                    if (getDecoratedLeft(child) - dx > getWidth() - getPaddingRight()) {
+                        removeAndRecycleView(child, recycler);
+                    } else {
+                        //mLastVisiblePosition = i;
+                        continue;
+                    }
+                }
+            }
+        }
     }
 
     //由于上述方法没有考虑margin的存在，所以我参考LinearLayoutManager的源码：
