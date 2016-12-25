@@ -108,3 +108,6 @@ Step 3.
 557266366 
 里面现在没有人。
 嗯，就这样吧。
+
+## Adapter：
+https://github.com/mcxtzhang/all-base-adapter
