@@ -99,6 +99,14 @@ Step 3.
 		 CardConfig.MAX_SHOW_COUNT = 6;
 ```
 
+设置仿探探竖直上下滑动，不删除Item。
+
+水平方向判断误差阈值x：
+```
+        final TanTanCallback callback = new TanTanCallback(mRv, mAdapter, mDatas);
+        callback.setHorizontalDeviation(x);
+```
+
 [流式布局](http://blog.csdn.net/zxt0601/article/details/52956504):
 ```
         mRv.setLayoutManager(new FlowLayoutManager());
@@ -109,5 +117,5 @@ Step 3.
 里面现在没有人。
 嗯，就这样吧。
 
-## Adapter：
+## 使用的Adapter：
 https://github.com/mcxtzhang/all-base-adapter
