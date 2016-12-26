@@ -3,6 +3,7 @@ package com.mcxtzhang.flowlayoutmanager.tantan;
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
@@ -16,7 +17,7 @@ import static com.mcxtzhang.layoutmanager.swipecard.CardConfig.SCALE_GAP;
 import static com.mcxtzhang.layoutmanager.swipecard.CardConfig.TRANS_Y_GAP;
 
 /**
- * 介绍：
+ * 介绍：探探效果定制的Callback
  * 作者：zhangxutong
  * 邮箱：mcxtzhang@163.com
  * 主页：http://blog.csdn.net/zxt0601
@@ -26,14 +27,75 @@ import static com.mcxtzhang.layoutmanager.swipecard.CardConfig.TRANS_Y_GAP;
 public class TanTanCallback extends RenRenCallback {
     private static final int MAX_ROTATION = 15;
 
+    //2016 12 26 考虑 探探垂直上下方向滑动，不删除卡片，
+    //判断 此次滑动方向是否是竖直的 ，水平方向上的误差(阈值，默认我给了50dp)
+    int mHorizontalDeviation;
+
+
     public TanTanCallback(RecyclerView rv, RecyclerView.Adapter adapter, List datas) {
         //this(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, rv, adapter, datas);
         super(rv, adapter, datas);
+        mHorizontalDeviation = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, mRv.getContext().getResources().getDisplayMetrics());
     }
 
     public TanTanCallback(int dragDirs, int swipeDirs, RecyclerView rv, RecyclerView.Adapter adapter, List datas) {
         super(dragDirs, swipeDirs, rv, adapter, datas);
     }
+
+    public int getHorizontalDeviation() {
+        return mHorizontalDeviation;
+    }
+
+    public TanTanCallback setHorizontalDeviation(int horizontalDeviation) {
+        mHorizontalDeviation = horizontalDeviation;
+        return this;
+    }
+
+    @Override
+    public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
+/*        Log.d("TAG", "getSwipeThreshold() called with: viewHolder.itemView.getX() = [" + viewHolder.itemView.getX() + "]");
+        Log.d("TAG", "getSwipeThreshold() called with:  viewHolder.itemView.getWidth() / 2  = [" + viewHolder.itemView.getWidth() / 2 + "]");
+        Log.d("TAG", "getSwipeThreshold() called with:  mRv.getX() = [" + mRv.getX() + "]");
+        Log.d("TAG", "getSwipeThreshold() called with:  mRv.getWidth() / 2 = [" + mRv.getWidth() / 2 + "]");*/
+
+        if (isTopViewCenterInHorizontal(viewHolder.itemView)) {
+            return Float.MAX_VALUE;
+        }
+        return super.getSwipeThreshold(viewHolder);
+    }
+
+    @Override
+    public float getSwipeEscapeVelocity(float defaultValue) {
+        View topView = mRv.getChildAt(mRv.getChildCount() - 1);
+        if (isTopViewCenterInHorizontal(topView)) {
+            return Float.MAX_VALUE;
+        }
+        return super.getSwipeEscapeVelocity(defaultValue);
+    }
+
+    @Override
+    public float getSwipeVelocityThreshold(float defaultValue) {
+
+        View topView = mRv.getChildAt(mRv.getChildCount() - 1);
+        if (isTopViewCenterInHorizontal(topView)) {
+            return Float.MAX_VALUE;
+        }
+        return super.getSwipeVelocityThreshold(defaultValue);
+    }
+
+    /**
+     * 返回TopView此时在水平方向上是否是居中的
+     *
+     * @return
+     */
+    public boolean isTopViewCenterInHorizontal(View topView) {
+        Log.d("TAG", "getSwipeThreshold() called with: viewHolder.itemView.getX() = [" + topView.getX() + "]");
+        Log.d("TAG", "getSwipeThreshold() called with:  viewHolder.itemView.getWidth() / 2  = [" + topView.getWidth() / 2 + "]");
+        Log.d("TAG", "getSwipeThreshold() called with:  mRv.getX() = [" + mRv.getX() + "]");
+        Log.d("TAG", "getSwipeThreshold() called with:  mRv.getWidth() / 2 = [" + mRv.getWidth() / 2 + "]");
+        return Math.abs(mRv.getWidth() / 2 - topView.getX() - (topView.getWidth() / 2)) < mHorizontalDeviation;
+    }
+
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {

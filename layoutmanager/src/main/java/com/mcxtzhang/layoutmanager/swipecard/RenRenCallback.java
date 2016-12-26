@@ -41,7 +41,8 @@ public class RenRenCallback extends ItemTouchHelper.SimpleCallback {
 
     //水平方向是否可以被回收掉的阈值
     public float getThreshold(RecyclerView.ViewHolder viewHolder) {
-        return mRv.getWidth() * getSwipeThreshold(viewHolder);
+        //2016 12 26 考虑 探探垂直上下方向滑动，不删除卡片，这里参照源码写死0.5f
+        return mRv.getWidth() * /*getSwipeThreshold(viewHolder)*/ 0.5f;
     }
 
     @Override
