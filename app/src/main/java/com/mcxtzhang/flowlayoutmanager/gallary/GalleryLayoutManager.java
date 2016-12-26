@@ -204,10 +204,10 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
         // Counteract the default slide transition
         //child.setTranslationX(child.getWidth() * -fraction);
         // Scale the page down (between MIN_SCALE and 1)
-        //scale(child, fraction);
+        scale(child, fraction);
 
 
-        //rotation(child, fraction);
+        rotation(child, fraction);
 
 
     }

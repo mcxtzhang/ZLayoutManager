@@ -34,5 +34,5 @@
         android:id="@+id/btnGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="酷炫折叠画廊"/>
+        android:text="酷炫折叠画廊(未完成)"/>
 </LinearLayout>
