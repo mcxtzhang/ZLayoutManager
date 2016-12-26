@@ -3,13 +3,13 @@ package com.mcxtzhang.flowlayoutmanager.swipecard;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.flowlayoutmanager.R;
+import com.mcxtzhang.layoutmanager.copy.ItemTouchHelper;
 import com.mcxtzhang.layoutmanager.swipecard.CardConfig;
 import com.mcxtzhang.layoutmanager.swipecard.OverLayCardLayoutManager;
 import com.mcxtzhang.layoutmanager.swipecard.RenRenCallback;

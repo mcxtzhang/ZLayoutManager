@@ -2,8 +2,9 @@ package com.mcxtzhang.layoutmanager.swipecard;
 
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import com.mcxtzhang.layoutmanager.copy.ItemTouchHelper;
 
 import java.util.List;
 

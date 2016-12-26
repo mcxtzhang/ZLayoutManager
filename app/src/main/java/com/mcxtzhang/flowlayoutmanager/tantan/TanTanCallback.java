@@ -50,13 +50,13 @@ public class TanTanCallback extends RenRenCallback {
         mHorizontalDeviation = horizontalDeviation;
         return this;
     }
-
+/*
     @Override
     public float getSwipeThreshold(RecyclerView.ViewHolder viewHolder) {
-/*        Log.d("TAG", "getSwipeThreshold() called with: viewHolder.itemView.getX() = [" + viewHolder.itemView.getX() + "]");
+*//*        Log.d("TAG", "getSwipeThreshold() called with: viewHolder.itemView.getX() = [" + viewHolder.itemView.getX() + "]");
         Log.d("TAG", "getSwipeThreshold() called with:  viewHolder.itemView.getWidth() / 2  = [" + viewHolder.itemView.getWidth() / 2 + "]");
         Log.d("TAG", "getSwipeThreshold() called with:  mRv.getX() = [" + mRv.getX() + "]");
-        Log.d("TAG", "getSwipeThreshold() called with:  mRv.getWidth() / 2 = [" + mRv.getWidth() / 2 + "]");*/
+        Log.d("TAG", "getSwipeThreshold() called with:  mRv.getWidth() / 2 = [" + mRv.getWidth() / 2 + "]");*//*
 
         if (isTopViewCenterInHorizontal(viewHolder.itemView)) {
             return Float.MAX_VALUE;
@@ -81,7 +81,8 @@ public class TanTanCallback extends RenRenCallback {
             return Float.MAX_VALUE;
         }
         return super.getSwipeVelocityThreshold(defaultValue);
-    }
+    }*/
+
 
     /**
      * 返回TopView此时在水平方向上是否是居中的
