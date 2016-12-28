@@ -57,8 +57,11 @@ public class TanTanActivity extends AppCompatActivity {
 
         CardConfig.initConfig(this);
 
-        //探探上下滑是不能删除的，所以只传入左右即可
-        final ItemTouchHelper.Callback callback = new TanTanCallback(mRv, mAdapter, mDatas);
+        final TanTanCallback callback = new TanTanCallback(mRv, mAdapter, mDatas);
+
+        //测试竖直滑动是否已经不会被移除屏幕
+        //callback.setHorizontalDeviation(Integer.MAX_VALUE);
+
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mRv);
 
