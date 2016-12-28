@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.flowlayoutmanager.R;
@@ -103,10 +104,18 @@ public class TanTanCallback extends RenRenCallback {
         //如果不需要循环删除
 /*        Object remove = mDatas.remove(viewHolder.getLayoutPosition());
         mAdapter.notifyDataSetChanged();*/
+        Log.e("swipecard", "厉害了");
+
+        if (isLeftSwipe){
+            Toast.makeText(mRv.getContext(), "左滑删除", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(mRv.getContext(), "右滑删除", Toast.LENGTH_SHORT).show();
+        }
 
         //探探只是第一层加了rotate & alpha的操作
         //对rotate进行复位
         viewHolder.itemView.setRotation(0);
+
         //自己感受一下吧 Alpha
         if (viewHolder instanceof ViewHolder) {
             ViewHolder holder = (ViewHolder) viewHolder;
@@ -169,5 +178,17 @@ public class TanTanCallback extends RenRenCallback {
                 }
             }
         }
+
+
+        //可以在此判断左右滑：
+        float v = mRv.getWidth() / 2 - viewHolder.itemView.getX() - (viewHolder.itemView.getWidth() / 2);
+        if (v > 0) {
+            isLeftSwipe = true;
+        } else if (v < 0) {
+            isLeftSwipe = false;
+        }
     }
+
+    //一个flag 判断左右滑
+    private boolean isLeftSwipe;
 }
