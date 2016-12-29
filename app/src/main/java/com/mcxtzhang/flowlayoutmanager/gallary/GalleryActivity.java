@@ -44,7 +44,7 @@ public class GalleryActivity extends AppCompatActivity {
 
         mRv.setLayoutManager(new GalleryLayoutManager());
         SnapHelper snapHelper = new LinearSnapHelper();
-        //snapHelper.attachToRecyclerView(mRv);
+        snapHelper.attachToRecyclerView(mRv);
     }
 
 

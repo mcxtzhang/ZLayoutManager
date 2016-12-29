@@ -90,10 +90,10 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
 
 
         //为了能给每个childView做动画
-/*        for (int i = 0; i < getChildCount(); i++) {
+        for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
             changeViewUIProperty(dx, child);
-        }*/
+        }
 
 
         //Step2.  layout right views
@@ -146,7 +146,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
         } else {
             //Step2.  layout left views
             //这种情况屏幕上一定有子View
-/*            View leftChild = getChildAt(0);
+            View leftChild = getChildAt(0);
             int endPos = getPosition(leftChild) - 1;
             if (mLastRecyclePosition != -1) {
                 //界面 1 2 ， 2回收， 应该从 0 = 2 - 1 - 1.
@@ -173,7 +173,7 @@ public class GalleryLayoutManager extends RecyclerView.LayoutManager {
                         , right, top + mChildHeight);
                 right -= mChildWidth;
 
-            }*/
+            }
 
         }
 
