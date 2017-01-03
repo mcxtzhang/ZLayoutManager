@@ -25,6 +25,10 @@
         </activity>
         <activity android:name=".gallary.GalleryActivity">
         </activity>
+        <activity
+            android:name=".zuimei.ScaleCardActivity"
+            android:theme="@style/NoTitle">
+        </activity>
     </application>
 
 </manifest>

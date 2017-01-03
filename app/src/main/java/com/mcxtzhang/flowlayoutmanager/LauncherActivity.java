@@ -8,6 +8,7 @@ import android.view.View;
 import com.mcxtzhang.flowlayoutmanager.gallary.GalleryActivity;
 import com.mcxtzhang.flowlayoutmanager.swipecard.SwipeCardActivity;
 import com.mcxtzhang.flowlayoutmanager.tantan.TanTanActivity;
+import com.mcxtzhang.flowlayoutmanager.zuimei.ScaleCardActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -37,6 +38,12 @@ public class LauncherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LauncherActivity.this, GalleryActivity.class));
+            }
+        });
+        findViewById(R.id.btnZuimeiCard).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LauncherActivity.this, ScaleCardActivity.class));
             }
         });
     }

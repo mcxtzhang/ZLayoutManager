@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="470dp"
+    android:background="#393F4E">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="170dp"
+        android:layout_height="200dp"
+        android:src="@drawable/pic4"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="210dp"
+        android:paddingTop="10dp"
+        android:textColor="@android:color/white"
+        android:text="怪气无语 第一季"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:background="#F05079"
+        android:text="订阅"/>
+
+    <TextView
+        android:id="@+id/tvPrecent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="3dp"
+        android:textColor="@android:color/white"
+        tools:text="1/13"/>
+
+</FrameLayout>
