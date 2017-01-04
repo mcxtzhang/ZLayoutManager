@@ -550,6 +550,9 @@ public class ItemTouchHelper extends RecyclerView.ItemDecoration
      * @param actionState The type of action
      */
     void select(ViewHolder selected, int actionState) {
+        if (selected != null && selected.itemView != mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1)) {
+            return;
+        }
         if (selected == mSelected && actionState == mActionState) {
             return;
         }
