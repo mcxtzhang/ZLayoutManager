@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Toast;
 
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.flowlayoutmanager.R;
@@ -106,11 +105,11 @@ public class TanTanCallback extends RenRenCallback {
         mAdapter.notifyDataSetChanged();*/
         Log.e("swipecard", "厉害了");
 
-        if (isLeftSwipe){
+/*        if (isLeftSwipe){
             Toast.makeText(mRv.getContext(), "左滑删除", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(mRv.getContext(), "右滑删除", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         //探探只是第一层加了rotate & alpha的操作
         //对rotate进行复位
@@ -169,9 +168,12 @@ public class TanTanCallback extends RenRenCallback {
                     if (dX > 0) {
                         //露出左边，比心
                         holder.setAlpha(R.id.iv_love, xFraction);
-                    } else {
+                    } else if (dX<0){
                         //露出右边，滚犊子
                         holder.setAlpha(R.id.iv_del, -xFraction);
+                    }else {
+                        holder.setAlpha(R.id.iv_love, 0);
+                        holder.setAlpha(R.id.iv_del, 0);
                     }
 
 
