@@ -10,6 +10,12 @@
 
 [仿探探、人人影视 卡片层叠 炫动滑动布局](http://blog.csdn.net/zxt0601/article/details/52956504)
 
+
+想经济上支持我 or 想通过视频看我是怎么实现的:
+
+http://edu.csdn.net/course/detail/3956
+
+
 If you like, point a star .Thank you very much!
 
 喜欢随手点个star 多谢
