@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
@@ -46,6 +47,15 @@ public class SwipeCardActivity extends AppCompatActivity {
         ItemTouchHelper.Callback callback = new RenRenCallback(mRv, mAdapter, mDatas);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mRv);
+
+
+        findViewById(R.id.btnRefresh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDatas.add(new SwipeCardBean(100, "http://news.k618.cn/tech/201604/W020160407281077548026.jpg", "增加的"));
+                mAdapter.notifyDataSetChanged();
+            }
+        });
 
     }
 
