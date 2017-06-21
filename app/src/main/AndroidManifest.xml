@@ -29,6 +29,8 @@
             android:name=".zuimei.ScaleCardActivity"
             android:theme="@style/NoTitle">
         </activity>
+        <activity android:name=".avatar.TanTanAvatarActivity">
+        </activity>
     </application>
 
 </manifest>

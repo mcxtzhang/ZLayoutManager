@@ -42,4 +42,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="最美首页卡片布局(未完成)"/>
+
+    <Button
+        android:id="@+id/btnTantanAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="探探选择头像界面"/>
 </LinearLayout>
