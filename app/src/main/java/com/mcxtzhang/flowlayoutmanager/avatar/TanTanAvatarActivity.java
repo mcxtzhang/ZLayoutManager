@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.flowlayoutmanager.R;
+import com.mcxtzhang.flowlayoutmanager.TanTanAnimator;
 import com.mcxtzhang.flowlayoutmanager.swipecard.SwipeCardBean;
 import com.squareup.picasso.Picasso;
 
@@ -71,7 +72,10 @@ public class TanTanAvatarActivity extends AppCompatActivity {
             }
         };
 
+        //ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(mRv);
+
+        mRv.setItemAnimator(new TanTanAnimator());
     }
 }
