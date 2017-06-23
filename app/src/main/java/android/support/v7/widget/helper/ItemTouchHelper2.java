@@ -541,6 +541,10 @@ public class ItemTouchHelper2 extends RecyclerView.ItemDecoration
             dx = mTmpPosition[0];
             dy = mTmpPosition[1];
         }
+        //add by zhangxutong
+/*        dx += mTouchingX - mInitialTouchX;
+        dy += mTouchingY - mInitialTouchY;*/
+
         mCallback.onDraw(c, parent, mSelected,
                 mRecoverAnimations, mActionState, dx, dy);
     }
@@ -573,6 +577,11 @@ public class ItemTouchHelper2 extends RecyclerView.ItemDecoration
         boolean preventLayout = false;
 
         if (mSelected != null) {
+            //add by zhangxutong
+            mSelected.itemView.setScaleX(1);
+            mSelected.itemView.setScaleY(1);
+            //end
+
             final ViewHolder prevSelected = mSelected;
             if (prevSelected.itemView.getParent() != null) {
                 final int swipeDir = prevActionState == ACTION_STATE_DRAG ? 0
@@ -660,6 +669,23 @@ public class ItemTouchHelper2 extends RecyclerView.ItemDecoration
             if (actionState == ACTION_STATE_DRAG) {
                 mSelected.itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             }
+            //add by zhangxutong
+
+            int left = mSelected.itemView.getLeft();
+            int width = mSelected.itemView.getWidth();
+            int top = mSelected.itemView.getTop();
+            int height = mSelected.itemView.getHeight();
+            int lastMiddleX = left + width / 2;
+            int lastMiddleY = top + height / 2;
+            float dX = mInitialTouchX - lastMiddleX;
+            float dY = mInitialTouchY - lastMiddleY;
+/*            ViewCompat.setTranslationX(mSelected.itemView, dX);
+            ViewCompat.setTranslationY(mSelected.itemView, dY);*/
+
+            float ratio = 200f / width;
+            mSelected.itemView.setScaleX(ratio);
+            mSelected.itemView.setScaleY(ratio);
+
         }
         final ViewParent rvParent = mRecyclerView.getParent();
         if (rvParent != null) {
@@ -844,7 +870,7 @@ public class ItemTouchHelper2 extends RecyclerView.ItemDecoration
             return;
         }
         // may swap.
-        ViewHolder target = mCallback.chooseDropTarget(viewHolder, swapTargets, mTouchingX, mTouchingY,mRecyclerView);
+        ViewHolder target = mCallback.chooseDropTarget(viewHolder, swapTargets, mTouchingX, mTouchingY, mRecyclerView);
         if (target == null) {
             mSwapTargets.clear();
             mDistances.clear();
@@ -1137,8 +1163,10 @@ public class ItemTouchHelper2 extends RecyclerView.ItemDecoration
     }
 
     void updateDxDy(MotionEvent ev, int directionFlags, int pointerIndex) {
+        //add by zhangxutong
         mTouchingX = (int) ev.getX();
         mTouchingY = (int) ev.getY();
+        //end
 
         final float x = ev.getX(pointerIndex);
         final float y = ev.getY(pointerIndex);
@@ -1759,15 +1787,15 @@ public class ItemTouchHelper2 extends RecyclerView.ItemDecoration
          * This method is called on the main thread every time user moves the View. If you want to
          * override it, make sure it does not do any expensive operations.
          *
-         * @param selected    The ViewHolder being dragged by the user.
-         * @param dropTargets The list of ViewHolder that are under the dragged View and
-         *                    candidate as a drop.
-         * @param curX        The updated left value of the dragged View after drag translations
-         *                    are applied. This value does not include margins added by
-         *                    {@link RecyclerView.ItemDecoration}s.
-         * @param curY        The updated top value of the dragged View after drag translations
-         *                    are applied. This value does not include margins added by
-         *                    {@link RecyclerView.ItemDecoration}s.
+         * @param selected     The ViewHolder being dragged by the user.
+         * @param dropTargets  The list of ViewHolder that are under the dragged View and
+         *                     candidate as a drop.
+         * @param curX         The updated left value of the dragged View after drag translations
+         *                     are applied. This value does not include margins added by
+         *                     {@link RecyclerView.ItemDecoration}s.
+         * @param curY         The updated top value of the dragged View after drag translations
+         *                     are applied. This value does not include margins added by
+         *                     {@link RecyclerView.ItemDecoration}s.
          * @param recyclerView
          * @return A ViewHolder to whose position the dragged ViewHolder should be
          * moved to.
