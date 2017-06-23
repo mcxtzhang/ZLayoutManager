@@ -1,4 +1,4 @@
-package com.mcxtzhang.flowlayoutmanager;
+package com.mcxtzhang.flowlayoutmanager.avatar;
 
 import android.animation.ValueAnimator;
 import android.support.v7.widget.DefaultItemAnimator;

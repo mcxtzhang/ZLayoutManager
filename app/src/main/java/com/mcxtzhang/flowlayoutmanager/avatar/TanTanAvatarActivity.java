@@ -1,16 +1,18 @@
 package com.mcxtzhang.flowlayoutmanager.avatar;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import android.support.v7.widget.helper.ItemTouchHelper2;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.mcxtzhang.flowlayoutmanager.R;
-import com.mcxtzhang.flowlayoutmanager.TanTanAnimator;
 import com.mcxtzhang.flowlayoutmanager.swipecard.SwipeCardBean;
 import com.squareup.picasso.Picasso;
 
@@ -18,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class TanTanAvatarActivity extends AppCompatActivity {
+    private static final String TAG = "zxt";
     RecyclerView mRv;
     CommonAdapter<SwipeCardBean> mAdapter;
     List<SwipeCardBean> mDatas;
@@ -43,10 +46,10 @@ public class TanTanAvatarActivity extends AppCompatActivity {
             }
         });
 
-        ItemTouchHelper.Callback callback = new ItemTouchHelper.Callback() {
+        ItemTouchHelper2.Callback callback = new ItemTouchHelper2.Callback() {
             @Override
             public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, 0);
+                return makeMovementFlags(ItemTouchHelper2.UP | ItemTouchHelper2.DOWN | ItemTouchHelper2.LEFT | ItemTouchHelper2.RIGHT, 0);
             }
 
             @Override
@@ -70,11 +73,26 @@ public class TanTanAvatarActivity extends AppCompatActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
             }
+
+            @Override
+            public RecyclerView.ViewHolder chooseDropTarget(RecyclerView.ViewHolder selected, List<RecyclerView.ViewHolder> dropTargets, int curX, int curY, RecyclerView recyclerView) {
+                Log.d(TAG, "chooseDropTarget() curX = [" + curX + "], curY = [" + curY + "]");
+                for (int i = 0; i < recyclerView.getChildCount(); i++) {
+                    View childAt = recyclerView.getChildAt(i);
+                    Rect rect = new Rect(childAt.getLeft(), childAt.getTop(), childAt.getRight(), childAt.getBottom());
+                    if (rect.contains(curX, curY)) {
+                        RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(childAt);
+                        if (holder.getAdapterPosition() != selected.getAdapterPosition())
+                            return holder;
+                    }
+                }
+                return null;
+            }
         };
 
-        //ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(mRv);
+        //ItemTouchHelper2 itemTouchHelper2 = new ItemTouchHelper2(callback);
+        ItemTouchHelper2 itemTouchHelper2 = new ItemTouchHelper2(callback);
+        itemTouchHelper2.attachToRecyclerView(mRv);
 
         mRv.setItemAnimator(new TanTanAnimator());
     }
