@@ -31,6 +31,7 @@
         </activity>
         <activity android:name=".avatar.TanTanAvatarActivity">
         </activity>
+        <activity android:name=".gallery.LoopGalleryActivity"/>
     </application>
 
 </manifest>

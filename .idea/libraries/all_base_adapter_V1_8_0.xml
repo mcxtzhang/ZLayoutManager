@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="all-base-adapter-V1.8.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/layoutmanager/build/intermediates/exploded-aar/com.github.mcxtzhang/all-base-adapter/V1.8.0/res" />
+      <root url="jar://$PROJECT_DIR$/layoutmanager/build/intermediates/exploded-aar/com.github.mcxtzhang/all-base-adapter/V1.8.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
