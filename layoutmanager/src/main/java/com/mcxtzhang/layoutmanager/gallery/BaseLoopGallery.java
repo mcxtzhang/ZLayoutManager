@@ -22,7 +22,7 @@ import java.util.List;
  * History:
  */
 
-public abstract class BaseLoopGallery<T> extends RecyclerView {
+public class BaseLoopGallery<T> extends RecyclerView {
     Context mContext;
     LinearLayoutManager mLinearLayoutManager;
     CommonAdapter mAdapter;
@@ -81,7 +81,9 @@ public abstract class BaseLoopGallery<T> extends RecyclerView {
         });
     }
 
-    public void setDatasAndLayoutId(final List<T> datas, int itemLayoutId) {
+    public void setDatasAndLayoutId(final List<T> datas, int itemLayoutId, BindDataListener bindDataListener) {
+        mBindDataListener = bindDataListener;
+
         setAdapter(mAdapter = new CommonAdapter<T>(mContext, datas, itemLayoutId) {
             @Override
             public void onBindViewHolder(com.mcxtzhang.commonadapter.rv.ViewHolder holder, int position) {
@@ -91,7 +93,10 @@ public abstract class BaseLoopGallery<T> extends RecyclerView {
 
             @Override
             public void convert(com.mcxtzhang.commonadapter.rv.ViewHolder viewHolder, T t) {
-                onBindData(viewHolder, t);
+                //onBindData(viewHolder, t);
+                if (null != mBindDataListener) {
+                    mBindDataListener.onBindData(viewHolder, t);
+                }
             }
 
             @Override
@@ -139,6 +144,18 @@ public abstract class BaseLoopGallery<T> extends RecyclerView {
         });
     }
 
-    public abstract void onBindData(com.mcxtzhang.commonadapter.rv.ViewHolder holder, T data);
+    public interface BindDataListener<T> {
+        void onBindData(com.mcxtzhang.commonadapter.rv.ViewHolder holder, T data);
+    }
 
+    BindDataListener mBindDataListener;
+
+    public BindDataListener getBindDataListener() {
+        return mBindDataListener;
+    }
+
+    public BaseLoopGallery setBindDataListener(BindDataListener bindDataListener) {
+        mBindDataListener = bindDataListener;
+        return this;
+    }
 }
