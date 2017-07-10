@@ -165,7 +165,10 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
             }
             //添加完后，判断是否已经没有更多的ItemView，并且此时屏幕仍有空白，则需要修正dy
             View lastChild = getChildAt(getChildCount() - 1);
-            if (getPosition(lastChild) == getItemCount() - 1) {
+            
+            View firstVisibleChild = getChildAt(0);
+            //要做底部修复，还要满足下面第一个条件：第一个显示的View的top在屏幕之外
+            if (firstVisibleChild.getTop() < 0 && getPosition(lastChild) == getItemCount() - 1) {
                 int gap = getHeight() - getPaddingBottom() - getDecoratedBottom(lastChild);
                 if (gap > 0) {
                     dy -= gap;
@@ -227,9 +230,13 @@ public class FlowLayoutManager extends RecyclerView.LayoutManager {
             View lastChild = getChildAt(getChildCount() - 1);
             if (getPosition(lastChild) == getItemCount() - 1) {
                 int gap = getHeight() - getPaddingBottom() - getDecoratedBottom(lastChild);
-                if (gap > 0) {
+                
+                
+                View firstVisibleChild = getChildAt(0);
+                //当前显示的第一个View的top小于零，说明该recyclerview发生了滚动，可以做底部修复
+                if (gap > 0 && firstVisibleChild.getTop() < 0) {
                     realOffset = -gap;
-                } else if (gap == 0) {
+                } else if (gap == 0 || firstVisibleChild.getTop() >= 0) {//当前第一个显示的top大于等于0，并且最后一个显示的就是最后一个，那一定不需要滚动了，即使gap！=0，也不需要修复
                     realOffset = 0;
                 } else {
                     realOffset = Math.min(realOffset, -gap);
