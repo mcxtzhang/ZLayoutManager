@@ -87,6 +87,16 @@ Step 2. Add the dependency
 	}
 ```
 
+注意:在高版本的Gradle构建的项目中,需要使用
+```
+
+    dependencies {
+	        implementation 'com.github.mcxtzhang:ZLayoutManager:V1.1.0'
+	}
+
+```
+以及需要在gradle.properties文件中加入: android.enableJetifier=true
+
 Step 3.
 [仿探探、人人影视 卡片层叠 炫动滑动布局](http://blog.csdn.net/zxt0601/article/details/52956504):
 
